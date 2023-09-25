@@ -1,0 +1,59 @@
+﻿@model Device
+
+<form method="post" enctype="multipart/form-data">
+    <div>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    </div>
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Create Device</h2>
+            <hr />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Code"></label>
+            <input asp-for="Code" class="form-control" />
+            <span asp-validation-for="Code" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Type"></label>
+            <input asp-for="Type" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label for="imageFile">Image</label>
+            <input type="file" name="imageFile" id="imageUpload" accept="image/*"><br />
+            <img id="imagePreview" src="#" alt="Image Preview" />
+            <button type="button" id="deleteImage" class="btn btn-danger mx-2" style="display: none;">
+                <i class="bi bi-trash3-fill"></i>Delete image</button>
+        </div>
+        <div class="mb-3">
+            <label for="pdfFileDE">PDF(DE)</label>
+            <input type="file" name="pdfFileDE" id="pdfUploadDE" accept=".pdf"><br />
+            <a id="pdfPreviewLinkDE" href="#" target="_blank" style="display: none;">Preview PDF(DE)</a>
+            <button id="deletePdfDE" class="btn btn-danger mx-2" style="display: none;"><i class="bi bi-trash3-fill"></i>Delete PDF(DE)</button>
+        </div>
+        <div class="mb-3">
+            <label for="pdfFileGB">PDF(GB)</label>
+            <input type="file" name="pdfFileGB" id="pdfUploadGB" accept=".pdf"><br />
+            <a id="pdfPreviewLinkGB" href="#" target="_blank" style="display: none;">Preview PDF(GB)</a>
+            <button id="deletePdfGB" class="btn btn-danger mx-2" style="display: none;"><i class="bi bi-trash3-fill"></i>Delete PDF(GB)</button>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary" style="width:150px">Create</button>
+        <a asp-controller="Device" asp-action="Index" class="btn btn-secondary" style="width:150px">
+            Back to list
+        </a>
+    </div>
+</form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+        <script src="/js/image.js"></script>
+        <script src="/js/pdf.js"></script>
+    }
+}

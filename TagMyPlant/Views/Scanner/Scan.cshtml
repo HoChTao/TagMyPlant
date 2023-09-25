@@ -1,0 +1,19 @@
+﻿@model Device
+@{
+    ViewData["Title"] = "Scan";
+}
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Search for the device information</h2>
+        </div>
+    </div>
+    <div>
+        <form method="post" asp-action="ScanResult">
+            <div class="input-group mb-3">
+                <input id="scandata" name="scandata" class="form-control" />
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+﻿@model Device
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Device Information</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Scanner" asp-action="Scan" class="btn btn-primary">
+                New Scan
+            </a>
+        </div>
+    </div>
+    <br />
+
+    <h3 class="col-6" style="text-align: justify;"><p>@Html.Raw(Model.Name)</p></h3>
+    <div class="col-8" style="text-align: justify;"><b>Barcode</b>:<br><p>@Html.Raw(Model.Code)</p></div>
+    <div class="col-8" style="text-align: justify;"><b>Type</b>:<br> <p>@Html.Raw(Model.Type)</p></div>
+    @if (Model.ImageURL != null)
+    {
+        <div class="col-8" style="text-align: justify;"><b>Image</b>:<br> <img src="@Model.ImageURL" alt="Device Image" /></div>
+    }
+    <div class="w-75 btn-group" role="group">
+        <b>PDF</b>:<br>
+        @if (Model.PdfUrlDE != null)
+        {
+            <div class="col-3" style="text-align: justify;"><a href="@Model.PdfUrlDE" target="_blank">check PDF(DE)</a></div>
+        }
+        @if (Model.PdfUrlGB != null)
+        {
+            <div class="col-3" style="text-align: justify;"><a href="@Model.PdfUrlGB" target="_blank">check PDF(GB)</a></div>
+        }
+    </div>
+    
+</div>
