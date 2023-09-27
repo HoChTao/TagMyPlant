@@ -21,22 +21,22 @@
             <input asp-for="Type" class="form-control" />
         </div>
 
-        <!-- 显示当前图片 -->
+        <!-- Show current image -->
         @if (!string.IsNullOrEmpty(Model.ImageURL))
         {
             <div class="mb-3">
-                <label asp-for="ImageURL">Current Image</label>
+                <label>Current Image</label>
                 <img src="@Model.ImageURL" alt="Current Image" />
             </div>
         }
 
-        <!-- 允许上传新图片 -->
+        <!-- Allow new images to be uploaded -->
         <div class="mb-3">
             <label for="imageFile">New Image</label>
             <input type="file" name="imageFile" id="imageUpload" accept="image/*">
         </div>
 
-        <!-- 显示当前文档 -->
+        <!-- Show current document -->
         @if (!string.IsNullOrEmpty(Model.PdfUrlDE))
         {
             <div class="mb-3">
@@ -45,13 +45,13 @@
             </div>
         }
 
-        <!-- 允许上传新文档 (DE) -->
+        <!-- Allow new document uploads (DE) -->
         <div class="mb-3">
             <label for="pdfFileDE">New PDF (DE)</label>
             <input type="file" name="pdfFileDE" id="pdfUploadDE" accept=".pdf">
         </div>
 
-        <!-- 显示当前文档 -->
+        <!-- Show current document -->
         @if (!string.IsNullOrEmpty(Model.PdfUrlGB))
         {
             <div class="mb-3">
@@ -60,7 +60,7 @@
             </div>
         }
 
-        <!-- 允许上传新文档 (GB) -->
+        <!-- Allow new document uploads (GB) -->
         <div class="mb-3">
             <label for="pdfFileGB">New PDF (GB)</label>
             <input type="file" name="pdfFileGB" id="pdfUploadGB" accept=".pdf">

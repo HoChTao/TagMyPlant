@@ -6,60 +6,60 @@ const pdfUploadGB = document.getElementById('pdfUploadGB');
 const pdfPreviewLinkGB = document.getElementById('pdfPreviewLinkGB');
 const deletePdfGB = document.getElementById('deletePdfGB');
 
-// PDF文件上传字段变化事件 - PDF(DE)
+// PDF file upload field change event - PDF(DE)
 pdfUploadDE.addEventListener('change', function () {
     const file = this.files[0];
     if (file) {
-        // 显示预览链接 - PDF(DE)
+        // Show preview link - PDF(DE)
         pdfPreviewLinkDE.href = URL.createObjectURL(file);
         pdfPreviewLinkDE.style.display = 'inline-block';
-        // 显示删除按钮 - PDF(DE)
+        // Show delete button - PDF(DE)
         deletePdfDE.style.display = 'inline-block';
     } else {
-        // 用户取消选择文件或未选择文件
-        // 隐藏预览链接 - PDF(DE)
+        // User deselects file or does not select file
+        // Hide preview link - PDF(DE)
         pdfPreviewLinkDE.style.display = 'none';
-        // 隐藏删除按钮 - PDF(DE)
+        // Hide delete button - PDF(DE)
         deletePdfDE.style.display = 'none';
     }
 });
 
-// 删除PDF按钮点击事件 - PDF(DE)
+// Hide PDF button click event - PDF(DE)
 deletePdfDE.addEventListener('click', function (e) {
     e.preventDefault();
-    // 重置PDF文件上传字段 - PDF(DE)
+    // Reset PDF file upload fields - PDF(DE)
     pdfUploadDE.value = '';
-    // 隐藏预览链接 - PDF(DE)
+    // Hide preview link - PDF(DE)
     pdfPreviewLinkDE.style.display = 'none';
-    // 隐藏删除按钮 - PDF(DE)
+    // Hide delete button - PDF(DE)
     deletePdfDE.style.display = 'none';
 });
 
-// PDF文件上传字段变化事件 - PDF(GB)
+// PDF file upload field change event - PDF(GB)
 pdfUploadGB.addEventListener('change', function () {
     const file = this.files[0];
     if (file) {
-        // 显示预览链接 - PDF(GB)
+        // Show preview link - PDF(GB)
         pdfPreviewLinkGB.href = URL.createObjectURL(file);
         pdfPreviewLinkGB.style.display = 'inline-block';
-        // 显示删除按钮 - PDF(GB)
+        // Show delete button - PDF(GB)
         deletePdfGB.style.display = 'inline-block';
     } else {
-        // 用户取消选择文件或未选择文件
-        // 隐藏预览链接 - PDF(GB)
+        // User deselects file or does not select file
+        // Hide preview link - PDF(GB)
         pdfPreviewLinkGB.style.display = 'none';
-        // 隐藏删除按钮 - PDF(GB)
+        // Hide delete button - PDF(GB)
         deletePdfGB.style.display = 'none';
     }
 });
 
-// 删除PDF按钮点击事件 - PDF(GB)
+// Hide PDF button click event - PDF(GB)
 deletePdfGB.addEventListener('click', function (e) {
     e.preventDefault();
-    // 重置PDF文件上传字段 - PDF(GB)
+    // Reset PDF file upload fields - PDF(GB)
     pdfUploadGB.value = '';
-    // 隐藏预览链接 - PDF(GB)
+    // Hide preview link - PDF(GB)
     pdfPreviewLinkGB.style.display = 'none';
-    // 隐藏删除按钮 - PDF(GB)
+    // Hide delete button - PDF(GB)
     deletePdfGB.style.display = 'none';
 });

@@ -40,55 +40,55 @@ namespace TagMyPlant.Controllers
                     return View(obj);
                 }
 
-                // 获取设备名称
+                // Get device name
                 string deviceName = obj.Name;
 
-                // 构建设备文件夹的路径
+                //Build the path to the device folder
                 string deviceFolderPath = Path.Combine(_hostingEnvironment.WebRootPath, "KVA-datasheets", deviceName);
 
-                // 检查设备文件夹是否存在，如果不存在则创建它
+                // Check if the device folder exists, if not create it
                 if (!Directory.Exists(deviceFolderPath))
                 {
                     Directory.CreateDirectory(deviceFolderPath);
                 }
 
-                // 保存图片文件
+                //Save image file
                 if (imageFile != null && imageFile.Length > 0)
                 {
-                    string imageFileName = Path.GetFileName(imageFile.FileName); // 获取上传文件的原始文件名
-                    string imageFilePath = Path.Combine(deviceFolderPath, imageFileName); // 假设图片扩展名为jpg
+                    string imageFileName = Path.GetFileName(imageFile.FileName); // Get the original file name of the uploaded file
+                    string imageFilePath = Path.Combine(deviceFolderPath, imageFileName); // Use the uploaded image name as the save file name
                     using (var stream = new FileStream(imageFilePath, FileMode.Create))
                     {
                         imageFile.CopyTo(stream);
                     }
-                    // 更新数据库中的ImageURL字段为图片的URL
-                    obj.ImageURL = "/KVA-datasheets/" + deviceName + "/" + imageFileName; // 设置为相对URL
+                    // Update the ImageURL field in the database to the URL of the image
+                    obj.ImageURL = "/KVA-datasheets/" + deviceName + "/" + imageFileName; // Set to relative URL
                 }
 
-                // 保存PDF文件 - DE
+                // Save PDF file - DE
                 if (pdfFileDE != null && pdfFileDE.Length > 0)
                 {
-                    string pdfFileNameDE = Path.GetFileName(pdfFileDE.FileName); // 获取上传文件的原始文件名
-                    string pdfFilePathDE = Path.Combine(deviceFolderPath, pdfFileNameDE); // 使用上传的文件名作为保存文件名
+                    string pdfFileNameDE = Path.GetFileName(pdfFileDE.FileName); // Get the original file name of the uploaded file
+                    string pdfFilePathDE = Path.Combine(deviceFolderPath, pdfFileNameDE); // Use the uploaded file name as the save file name
                     using (var stream = new FileStream(pdfFilePathDE, FileMode.Create))
                     {
                         pdfFileDE.CopyTo(stream);
                     }
-                    // 更新数据库中的PdfUrlDE字段为PDF文件的URL
-                    obj.PdfUrlDE = "/KVA-datasheets/" + deviceName + "/" + pdfFileNameDE; // 设置为相对URL
+                    // Update the PdfUrlDE field in the database to the URL of the PDF file
+                    obj.PdfUrlDE = "/KVA-datasheets/" + deviceName + "/" + pdfFileNameDE; // Set to relative URL
                 }
 
-                // 保存PDF文件 - GB
+                // Save PDF file - GB
                 if (pdfFileGB != null && pdfFileGB.Length > 0)
                 {
-                    string pdfFileNameGB = Path.GetFileName(pdfFileGB.FileName); // 获取上传文件的原始文件名
-                    string pdfFilePathGB = Path.Combine(deviceFolderPath, pdfFileNameGB); // 使用上传的文件名作为保存文件名
+                    string pdfFileNameGB = Path.GetFileName(pdfFileGB.FileName); // Get the original file name of the uploaded file
+                    string pdfFilePathGB = Path.Combine(deviceFolderPath, pdfFileNameGB); // Use the uploaded file name as the save file name
                     using (var stream = new FileStream(pdfFilePathGB, FileMode.Create))
                     {
                         pdfFileGB.CopyTo(stream);
                     }
-                    // 更新数据库中的PdfUrlGB字段为PDF文件的URL
-                    obj.PdfUrlGB = "/KVA-datasheets/" + deviceName + "/" + pdfFileNameGB; // 设置为相对URL
+                    // Update the PdfUrlGB field in the database to the URL of the PDF file
+                    obj.PdfUrlGB = "/KVA-datasheets/" + deviceName + "/" + pdfFileNameGB; // Set to relative URL
                 }
 
                 _db.Devices.Add(obj);
@@ -124,12 +124,13 @@ namespace TagMyPlant.Controllers
             {
                 if (IsDeviceExists(obj.Name, obj.Code))
                 {
+                    ModelState.AddModelError(string.Empty, "Device with the same name or barcode has been registered.");
                     TempData["error"] = "Device with the same name or barcode has been registet";
                     return View(obj);
                 }
                 if (imageFile != null && imageFile.Length > 0)
                 {
-                    // 删除旧图片文件
+                    // Delete old image files
                     if (!string.IsNullOrEmpty(deviceFromDb.ImageURL))
                     {
                         string oldImagePath = Path.Combine(_hostingEnvironment.WebRootPath, deviceFromDb.ImageURL.TrimStart('/'));
@@ -138,20 +139,19 @@ namespace TagMyPlant.Controllers
                             System.IO.File.Delete(oldImagePath);
                         }
                     }
-                    // 保存新图片文件
+                    // Save new image file
                     string newImageFileName = Path.GetFileName(imageFile.FileName);
                     string newImageFilePath = Path.Combine(_hostingEnvironment.WebRootPath, "KVA-datasheets", obj.Name, newImageFileName);
                     using (var stream = new FileStream(newImageFilePath, FileMode.Create))
                     {
                         imageFile.CopyTo(stream);
                     }
-                    obj.ImageURL = "/KVA-datasheets/" + obj.Name + "/" + newImageFileName; // 更新图片URL
+                    obj.ImageURL = "/KVA-datasheets/" + obj.Name + "/" + newImageFileName; // Update image URL
                 }
                 
-                // 保存新PDF文件 - DE
                 if (pdfFileDE != null && pdfFileDE.Length > 0)
                 {
-                    // 删除旧PDF文件 - DE
+                    // Delete old PDF files - DE
                     if (!string.IsNullOrEmpty(deviceFromDb.PdfUrlDE))
                     {
                         string oldPdfPathDE = Path.Combine(_hostingEnvironment.WebRootPath, deviceFromDb.PdfUrlDE.TrimStart('/'));
@@ -160,20 +160,19 @@ namespace TagMyPlant.Controllers
                             System.IO.File.Delete(oldPdfPathDE);
                         }
                     }
-
-                    string  newPdfFileNameDE = Path.GetFileName(pdfFileDE.FileName);
+                    // Save new PDF file - DE
+                    string newPdfFileNameDE = Path.GetFileName(pdfFileDE.FileName);
                     string newPdfFilePathDE = Path.Combine(_hostingEnvironment.WebRootPath, "KVA-datasheets", obj.Name, newPdfFileNameDE);
                     using (var stream = new FileStream(newPdfFilePathDE, FileMode.Create))
                     {
                         pdfFileDE.CopyTo(stream);
                     }
-                    obj.PdfUrlDE = "/KVA-datasheets/" + obj.Name + "/" + newPdfFileNameDE; // 更新PDF URL (DE)
+                    obj.PdfUrlDE = "/KVA-datasheets/" + obj.Name + "/" + newPdfFileNameDE; // Update PDF URL (DE)
                 }
-
-                // 保存新PDF文件 - GB
+               
                 if (pdfFileGB != null && pdfFileGB.Length > 0)
                 {
-                    // 删除旧PDF文件 - GB
+                    // Delete old PDF files - GB
                     if (!string.IsNullOrEmpty(deviceFromDb.PdfUrlGB))
                     {
                         string oldPdfPathGB = Path.Combine(_hostingEnvironment.WebRootPath, deviceFromDb.PdfUrlGB.TrimStart('/'));
@@ -182,17 +181,17 @@ namespace TagMyPlant.Controllers
                             System.IO.File.Delete(oldPdfPathGB);
                         }
                     }
-
+                    // Save new PDF file - GB
                     string newPdfFileNameGB = Path.GetFileName(pdfFileGB.FileName);
                     string newPdfFilePathGB = Path.Combine(_hostingEnvironment.WebRootPath, "KVA-datasheets", obj.Name, newPdfFileNameGB);
                     using (var stream = new FileStream(newPdfFilePathGB, FileMode.Create))
                     {
                         pdfFileGB.CopyTo(stream);
                     }
-                    obj.PdfUrlGB = "/KVA-datasheets/" + obj.Name + "/" + newPdfFileNameGB; // 更新PDF URL (GB)
+                    obj.PdfUrlGB = "/KVA-datasheets/" + obj.Name + "/" + newPdfFileNameGB; // Update PDF URL (GB)
                 }
 
-                // 更新数据库中的设备信息
+                //Update device information in the database
                 _db.Devices.Update(obj);
                 _db.SaveChanges();
 
@@ -228,13 +227,13 @@ namespace TagMyPlant.Controllers
                 return NotFound();
             }
 
-            // 获取设备文件夹的路径
+            // Get the path of the device folder
             string deviceFolderPath = Path.Combine(_hostingEnvironment.WebRootPath, "KVA-datasheets", obj.Name);
 
-            // 删除设备文件夹及其所有文件
+            // Delete the device folder and all its files
             if (Directory.Exists(deviceFolderPath))
             {
-                Directory.Delete(deviceFolderPath, true); // 第二个参数表示递归删除文件夹及其内容
+                Directory.Delete(deviceFolderPath, true); //The second parameter indicates recursive deletion of the folder and its contents
             }
 
             _db.Devices.Remove(obj);
@@ -245,7 +244,7 @@ namespace TagMyPlant.Controllers
 
         public bool IsDeviceExists(string name, string code)
         {
-            // 查询数据库以检查是否存在具有相同Name或相同Code的设备
+            // Query the database to check if there is a device with the same Name or the same Code
             return _db.Devices.Any(d => d.Name == name || d.Code == code);
         }
 

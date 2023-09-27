@@ -4,5 +4,17 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div>
+        <div style="text-align: left;">
+            This is the home page. You can navigate to the other pages using the navigation bar at the top of the page.
+        </div>
+        <br />
+        <div style="text-align: left;">
+            The <strong><a asp-controller="Device" asp-action="Index">Device</a></strong> page allows you to view all the devices in the database. You can also add a new device to the database from this page, or edit or delete an existing device.
+            <div style="text-align: left;">
+            <br />
+                The <strong><a asp-controller="Scanner" asp-action="Scan">Scan</a></strong> page allows you to enter the device barcode, or obtain the barcode through a barcode scanner to obtain device information.<br />
+                (<strong>Note</strong>: the scanner must be connected to the machine via Bluetooth or USB)
+            </div>
+    </div>
 </div>

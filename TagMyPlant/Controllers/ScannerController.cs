@@ -20,25 +20,23 @@ namespace TagMyPlantWeb.Controllers
         {            
             return View();
         }
-
+        
         public IActionResult ScanResult(string scandata)
         {
-            if (scandata != null)
+            if (scandata != null && System.Text.RegularExpressions.Regex.IsMatch(scandata, @"^\d+$"))
             {
-                // 现在 'id' 包含了从字符串 'scandata' 转换而来的整数值
                 var deviceFromDb = _db.Devices
                     .FirstOrDefault(d => d.Code == scandata);
 
                 if (deviceFromDb == null)
                 {
-                    return NotFound();
+                    return BadRequest("Device with barcode"+ " " + scandata + " " + "is not found!");
                 }
 
                 return View(deviceFromDb);
             }
             else
             {
-                // 无法将 'scandata' 转换为整数，显示错误或执行其他操作
                 return BadRequest("Invalid input. Please enter a valid integer.");
             }
         }

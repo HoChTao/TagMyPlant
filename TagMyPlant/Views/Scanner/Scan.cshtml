@@ -13,7 +13,14 @@
         <form method="post" asp-action="ScanResult">
             <div class="input-group mb-3">
                 <input id="scandata" name="scandata" class="form-control" />
+<button type="submit" class="btn btn-primary" style="width:150px">Search</button>
             </div>
         </form>
     </div>
 </div>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
